@@ -7,6 +7,7 @@ import {
   Box,
   Grid,
   Container,
+  CardMedia,
 } from '@mui/material';
 import {
   useForm,
@@ -26,6 +27,12 @@ function Login() {
     setError,
     clearErrors,
   } = useForm();
+
+  React.useEffect(() => {
+    if (UserController.fetchUser()) {
+      navigate('dashboard');
+    }
+  }, []);
 
   React.useEffect(() => {
     const subscription = watch((value, { name }) => {
@@ -49,6 +56,11 @@ function Login() {
     <Box className="page">
       <Container maxWidth="sm">
         <Card>
+          <CardMedia
+            component="img"
+            src="https://elogroup.com.br/wp-content/uploads/2021/08/Logo-2.svg"
+            alt="elogroup logo"
+          />
           <CardContent>
             <form onSubmit={handleSubmit(registerUser)}>
               <Grid container flexDirection="column" spacing={1}>

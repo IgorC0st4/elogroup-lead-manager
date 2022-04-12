@@ -4,6 +4,11 @@ import { ItemTypes, TilesPositionsOrder } from '../../../utils/Constants';
 import StyledTableCell from '../StyledTableCell';
 import LeadController from '../../../controllers/LeadController';
 
+// "Smart" component where DragTile can be dropped on
+// Main props are:
+// x -> row on table
+// y -> column on table
+// updateTable -> function to trigger table re-render
 function EmptySlot({ x, y, updateTable }) {
   const [{ isOver }, drop] = useDrop(
     () => ({
@@ -24,19 +29,11 @@ function EmptySlot({ x, y, updateTable }) {
   return (
     <StyledTableCell
       ref={drop}
-    >
-      {isOver && (
-        <div
-          style={{
-            top: 0,
-            left: 0,
-            zIndex: 1,
-            opacity: 0.5,
-            backgroundColor: 'grey',
-          }}
-        />
-      )}
-    </StyledTableCell>
+      style={isOver ? {
+        opacity: 0.5,
+        backgroundColor: 'greenyellow',
+      } : {}}
+    />
   );
 }
 export default EmptySlot;

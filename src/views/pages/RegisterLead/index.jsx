@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Card,
@@ -17,9 +16,6 @@ import {
   useForm,
   Controller,
 } from 'react-hook-form';
-import {
-  useNavigate,
-} from 'react-router-dom';
 
 import LeadController from '../../../controllers/LeadController';
 
@@ -50,18 +46,12 @@ function RegisterLead() {
     showSuccessMessage,
     setShowSuccessMessage,
   ] = React.useState(false);
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setError,
-    clearErrors,
     control,
     setValue,
-    getValues,
-    getFieldState,
-
   } = useForm();
 
   const validateCheckboxGroup = (group) => {
@@ -108,29 +98,52 @@ function RegisterLead() {
 
   return (
     <Box className="page">
-      <Container maxWidth="sm">
+      <Container maxWidth="lg">
         <Card>
           <CardContent>
-            <form onSubmit={handleSubmit(registerLead)}>
-              <Grid container flexDirection="row" spacing={2}>
-                <Grid item xs={12} md={6}>
-                  <Grid container flexDirection="column" spacing={1}>
-                    <Grid item>
-                      <TextField
-                        fullWidth
-                        label="Nome *"
-                        error={!!errors.name}
-                        {...register('name', { required: true })}
-                        helperText={errors.name ? 'Campo obrigatório' : ''}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <TextField
-                        fullWidth
-                        label="Telefone *"
-                        type="tel"
-                        error={!!errors.telephone}
-                        {
+            <Grid container flexDirection="column" spacing={1}>
+              <Grid item>
+                <Grid
+                  container
+                  flexDirection="row"
+                  justifyContent="center"
+                  justifyItems="center"
+                  alignContent="center"
+                  alignItems="center"
+                  spacing={1}
+                >
+                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <img
+                      alt="elogroup logo"
+                      src="https://elogroup.com.br/wp-content/uploads/2021/08/Logo-2.svg"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={6} lg={3}>
+                    <Typography variant="h4" component="div">Novo Lead</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <form onSubmit={handleSubmit(registerLead)}>
+                  <Grid container flexDirection="row" spacing={2}>
+                    <Grid item xs={12} md={6}>
+                      <Grid container flexDirection="column" spacing={1}>
+                        <Grid item>
+                          <TextField
+                            fullWidth
+                            label="Nome *"
+                            error={!!errors.name}
+                            {...register('name', { required: true })}
+                            helperText={errors.name ? 'Campo obrigatório' : ''}
+                          />
+                        </Grid>
+                        <Grid item>
+                          <TextField
+                            fullWidth
+                            label="Telefone *"
+                            type="tel"
+                            error={!!errors.telephone}
+                            {
                       ...register(
                         'telephone',
                         {
@@ -141,20 +154,20 @@ function RegisterLead() {
                         },
                       )
                     }
-                        helperText={
+                            helperText={
                     errors.password
                       ? 'Formato inválido'
                       : 'Entre apenas números. Mínimo 10 dígitos (incluindo DDD)'
                     }
-                      />
-                    </Grid>
-                    <Grid item>
-                      <TextField
-                        fullWidth
-                        label="Email *"
-                        type="email"
-                        error={!!errors.email}
-                        {
+                          />
+                        </Grid>
+                        <Grid item>
+                          <TextField
+                            fullWidth
+                            label="Email *"
+                            type="email"
+                            error={!!errors.email}
+                            {
                       ...register(
                         'email',
                         {
@@ -164,26 +177,26 @@ function RegisterLead() {
                         },
                       )
                     }
-                        helperText={
+                            helperText={
                           errors.email
                             ? 'Campo inválido'
                             : ''
                     }
-                      />
+                          />
+                        </Grid>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Grid container flexDirection="column" spacing={1}>
-                    <Grid item>
-                      <Paper>
-                        <Grid container flexDirection="column" spacing={1} paddingLeft={1}>
-                          <Grid item>
-                            <Typography variant="body1" gutterBottom component="div">
-                              Oportunidades *
-                            </Typography>
-                          </Grid>
-                          {
+                    <Grid item xs={12} md={6}>
+                      <Grid container flexDirection="column" spacing={1}>
+                        <Grid item>
+                          <Paper>
+                            <Grid container flexDirection="column" spacing={1} paddingLeft={1}>
+                              <Grid item>
+                                <Typography variant="body1" gutterBottom component="div">
+                                  Oportunidades *
+                                </Typography>
+                              </Grid>
+                              {
                             showOportunityError && (
                               <Grid item>
                                 <Typography variant="body2" gutterBottom component="div" color="red">
@@ -192,12 +205,12 @@ function RegisterLead() {
                               </Grid>
                             )
                           }
-                          <Grid item>
-                            <FormControlLabel
-                              control={<Checkbox onChange={toggleAllOptions} />}
-                            />
-                          </Grid>
-                          {
+                              <Grid item>
+                                <FormControlLabel
+                                  control={<Checkbox onChange={toggleAllOptions} />}
+                                />
+                              </Grid>
+                              {
                           oportunities.map((oportunity, index) => (
                             <Controller
                               key={index.toString()}
@@ -221,9 +234,9 @@ function RegisterLead() {
                             />
                           ))
                         }
-                        </Grid>
+                            </Grid>
 
-                        {
+                            {
                             showSuccessMessage && (
                               <Grid item>
                                 <Typography variant="body2" gutterBottom component="div" color="green">
@@ -232,16 +245,19 @@ function RegisterLead() {
                               </Grid>
                             )
                           }
-                      </Paper>
+                          </Paper>
+                        </Grid>
+                        <Grid item>
+                          <Button variant="contained" fullWidth type="submit">Registrar</Button>
+                        </Grid>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Button variant="contained" fullWidth type="submit">Registrar</Button>
-                    </Grid>
-                  </Grid>
-                </Grid>
 
+                  </Grid>
+                </form>
               </Grid>
-            </form>
+            </Grid>
+
           </CardContent>
         </Card>
       </Container>

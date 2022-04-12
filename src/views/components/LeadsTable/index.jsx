@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Paper,
@@ -8,23 +7,21 @@ import {
   TableHead,
   TableBody,
 } from '@mui/material';
-import {
-  styled,
-} from '@mui/material/styles';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import DragTile from '../DragTile';
 import EmptySlot from '../EmptySlot';
 import StyledTableCell from '../StyledTableCell';
+import StyledTableRow from '../StyledTableRow';
 import { TilesPositionsOrder } from '../../../utils/Constants';
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
-}));
-
+// Verify if current cell to be rendered must be a DragTile or an EmptySlot
+// lead -> current lead object
+// x -> table row
+// y -> table column
+// tilePosition -> column category
+// updateTable -> function to trigger table re-render
 const renderCell = (lead, x, y, tilePosition, updateTable) => {
   if (lead.status === tilePosition) {
     return (
@@ -39,15 +36,23 @@ const renderCell = (lead, x, y, tilePosition, updateTable) => {
   return (<EmptySlot key={y} x={x} y={y} updateTable={updateTable} />);
 };
 
-const renderRow = (lead, i, updateTable) => (
-  <StyledTableRow key={i}>
+// Loops through status categories and renders a row
+// lead -> current lead object
+// row -> row number
+// updateTable -> function to trigger table re-render
+const renderRow = (lead, row, updateTable) => (
+  <StyledTableRow key={row}>
     {
         TilesPositionsOrder
-          .map((tilePosition, index) => renderCell(lead, i, index, tilePosition, updateTable))
+          .map((tilePosition, column) => renderCell(lead, row, column, tilePosition, updateTable))
     }
   </StyledTableRow>
 );
 
+// Component that will render the table with
+// All registered leads on their correspondent status columns
+// leads -> array with registered leads
+// updateTable -> function to trigger table re-render
 function LeadsTable({ leads, updateTable }) {
   const rows = [];
   leads.forEach((lead, index) => {
@@ -56,7 +61,7 @@ function LeadsTable({ leads, updateTable }) {
   return (
     <DndProvider backend={HTML5Backend}>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
+        <Table>
           <TableHead>
             <TableRow>
               <StyledTableCell>Cliente em Potencial</StyledTableCell>

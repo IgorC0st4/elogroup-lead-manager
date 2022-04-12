@@ -3,6 +3,11 @@ import { useDrag } from 'react-dnd';
 import { ItemTypes } from '../../../utils/Constants';
 import StyledTableCell from '../StyledTableCell';
 
+// "Smart" component that can be dragged
+// Main props are:
+// lead -> object that will populate the text
+// x -> row on table
+// y -> column on table
 function DragTile({ lead, x, y }) {
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.LEAD,

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Card,
@@ -7,6 +6,7 @@ import {
   Box,
   Grid,
   Container,
+  Typography,
 } from '@mui/material';
 import {
   Link,
@@ -22,12 +22,12 @@ import LeadController from '../../../controllers/LeadController';
 function LeadsDashboard() {
   const [leads, setLeads] = React.useState([]);
   const getLeads = () => {
-    LeadController.initializeInsertLeadId();
     const queryResult = LeadController.fetchLeads();
     setLeads(queryResult);
   };
 
   React.useEffect(() => {
+    LeadController.initializeInsertLeadId();
     getLeads();
   }, []);
 
@@ -37,6 +37,27 @@ function LeadsDashboard() {
         <Card>
           <CardContent>
             <Grid container flexDirection="column" spacing={1}>
+              <Grid item>
+                <Grid
+                  container
+                  flexDirection="row"
+                  justifyContent="center"
+                  justifyItems="center"
+                  alignContent="center"
+                  alignItems="center"
+                  spacing={1}
+                >
+                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <img
+                      alt="elogroup logo"
+                      src="https://elogroup.com.br/wp-content/uploads/2021/08/Logo-2.svg"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={6} lg={3}>
+                    <Typography variant="h4" component="div">Painel de Leads</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
               <Grid item>
                 <Button variant="contained" endIcon={<AddIcon />}>
                   <Link className="new-lead-button" to="/new">Novo Lead</Link>
